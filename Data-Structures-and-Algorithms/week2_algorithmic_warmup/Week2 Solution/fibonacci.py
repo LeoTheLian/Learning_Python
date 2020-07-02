@@ -1,5 +1,5 @@
 # Uses python3
-def calc_fib(n):
+def get_fibo(n):
     if n <= 1:
         return n
     fibo = [0] * n
@@ -10,5 +10,5 @@ def calc_fib(n):
     return fibo
 
 
-n = int(input())
-print(calc_fib(n))
+for i in range (2, 50):
+    print(str(sum(get_fibo(i)))[-1])
