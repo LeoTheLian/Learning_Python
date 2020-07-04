@@ -5,17 +5,15 @@ from collections import namedtuple
 Segment = namedtuple('Segment', 'start end')
 
 def optimal_points(segments):
-    points = []
     #write your code here
-    for s in segments:
-        points.append(s.start)
-        points.append(s.end)
-    return points
+    n = segments[0].start
+    W = segments[0].end
+    
+    return [n, W, len(segments)]
 
 if __name__ == '__main__':
-    input = sys.stdin.read()
-    n, *data = map(int, input.split())
-    segments = list(map(lambda x: Segment(x[0], x[1]), zip(data[::2], data[1::2])))
+    n = sys.stdin.read().split()
+    segments = list(map(lambda x: Segment(x[0], x[1]), zip(n[::2], n[1::2])))
     points = optimal_points(segments)
     print(len(points))
     print(*points)
