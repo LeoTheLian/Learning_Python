@@ -2,9 +2,22 @@
 import sys
 
 def fast_count_segments(starts, ends, points):
-    cnt = [0] * len(points)
-    #write your code here
-    return cnt
+    cnt = {}
+    all_points = [(s, 'left') for s in starts] 
+    all_points += [(e, 'right') for e in ends] 
+    all_points += [(p, 'point') for p in points]
+    all_points.sort()
+    count = 0
+    
+    for pos , kind in all_points:
+        if kind == 'left':
+            count += 1
+        elif kind == 'right':
+            count -= 1
+        else:
+            cnt[pos] = count
+
+    return [cnt[p] for p in points]
 
 def naive_count_segments(starts, ends, points):
     cnt = [0] * len(points)
@@ -23,6 +36,6 @@ if __name__ == '__main__':
     ends   = data[3:2 * n + 2:2]
     points = data[2 * n + 2:]
     #use fast_count_segments
-    cnt = naive_count_segments(starts, ends, points)
+    cnt = fast_count_segments(starts, ends, points)
     for x in cnt:
         print(x, end=' ')
