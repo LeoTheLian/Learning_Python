@@ -17,11 +17,15 @@ def find_mismatch(text):
             pass
 
         if c in ")]}":
+            if not opening_brackets_stack:
+                return i + 1
             if are_matching(opening_brackets_stack[-1].char, c):
                 opening_brackets_stack.pop(-1)
                 pass
             else:
-                return i + 1           
+                return i + 1
+    if opening_brackets_stack:
+        return opening_brackets_stack[0].position + 1           
     return "Success"    
 
 def main():

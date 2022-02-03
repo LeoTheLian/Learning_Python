@@ -12,9 +12,23 @@ class Buffer:
         self.finish_time = []
 
     def process(self, request):
-        # write your code here
-        return Response(False, -1)
-
+        # empty requests that can be finished before the this one arrives
+        while self.finish_time and self.finish_time[0] <= request.arrived_at:
+            self.finish_time.pop(0)
+        
+        # when buffer is full 
+        if len(self.finish_time) == self.size:
+            return Response(True, -1)
+        
+        # check if there is unfinished request 
+        if self.finish_time:
+            t_start = self.finish_time[-1]
+        else:
+            t_start = request.arrived_at
+        
+        # schedule this request 
+        self.finish_time.append(t_start + request.time_to_process)
+        return Response(False, t_start)
 
 def process_requests(requests, buffer):
     responses = []
